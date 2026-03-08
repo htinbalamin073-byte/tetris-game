@@ -1,30 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tetris Game</title>
-<link rel="stylesheet" href="style.css">
-</head>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
 
-<body>
+let x = 100;
+let y = 0;
+let score = 0;
+let game;
 
-<h1>Tetris Game</h1>
+function draw(){
+ctx.clearRect(0,0,240,400);
+ctx.fillStyle="cyan";
+ctx.fillRect(x,y,20,20);
+}
 
-<div class="score">Score: <span id="score">0</span></div>
+function update(){
+y += 20;
 
-<button onclick="startGame()">Start</button>
-<button onclick="restartGame()">Restart</button>
+if(y > 380){
+y = 0;
+score += 10;
+document.getElementById("score").innerText = score;
+}
 
-<canvas id="game" width="240" height="400"></canvas>
+draw();
+}
 
-<div class="controls">
-<button onclick="moveLeft()">⬅️</button>
-<button onclick="rotate()">🔄</button>
-<button onclick="moveRight()">➡️</button>
-<button onclick="moveDown()">⬇️</button>
-</div>
+function startGame(){
+clearInterval(game);
+game = setInterval(update,500);
+}
 
-<script src="script.js"></script>
+function restartGame(){
+x = 100;
+y = 0;
+score = 0;
+document.getElementById("score").innerText = score;
+startGame();
+}
 
-</body>
-</html>
+function moveLeft(){
+x -= 20;
+draw();
+}
+
+function moveRight(){
+x += 20;
+draw();
+}
+
+function moveDown(){
+y += 20;
+draw();
+}
+
+function rotate(){
+}
+
+document.addEventListener("keydown",function(e){
+
+if(e.key=="ArrowLeft") moveLeft();
+if(e.key=="ArrowRight") moveRight();
+if(e.key=="ArrowDown") moveDown();
+
+});
