@@ -1,61 +1,30 @@
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tetris Game</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
-const grid = 20;
-const rows = canvas.height / grid;
-const cols = canvas.width / grid;
+<body>
 
-let board = [];
+<h1>Tetris Game</h1>
 
-for(let r=0;r<rows;r++){
-    board[r] = [];
-    for(let c=0;c<cols;c++){
-        board[r][c] = 0;
-    }
-}
+<div class="score">Score: <span id="score">0</span></div>
 
-let piece = {
-    x:5,
-    y:0,
-    shape:[
-        [1,1],
-        [1,1]
-    ]
-};
+<button onclick="startGame()">Start</button>
+<button onclick="restartGame()">Restart</button>
 
-function drawSquare(x,y){
-    ctx.fillStyle="cyan";
-    ctx.fillRect(x*grid,y*grid,grid-1,grid-1);
-}
+<canvas id="game" width="240" height="400"></canvas>
 
-function drawBoard(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+<div class="controls">
+<button onclick="moveLeft()">⬅️</button>
+<button onclick="rotate()">🔄</button>
+<button onclick="moveRight()">➡️</button>
+<button onclick="moveDown()">⬇️</button>
+</div>
 
-    for(let r=0;r<rows;r++){
-        for(let c=0;c<cols;c++){
-            if(board[r][c]){
-                drawSquare(c,r);
-            }
-        }
-    }
+<script src="script.js"></script>
 
-    for(let r=0;r<piece.shape.length;r++){
-        for(let c=0;c<piece.shape[r].length;c++){
-            if(piece.shape[r][c]){
-                drawSquare(piece.x+c,piece.y+r);
-            }
-        }
-    }
-}
-
-function update(){
-    piece.y++;
-
-    if(piece.y > rows-2){
-        piece.y = 0;
-    }
-
-    drawBoard();
-}
-
-setInterval(update,500);
+</body>
+</html>
